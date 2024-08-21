@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-    // mixins: [AuthRouteLayoutMixin],
-    layout: [SimpleLayoutForLogin],
-};
-</script>
 <script setup lang="ts">
 import SimpleLayoutForLogin from "@/Layouts/SimpleLayoutForLogin.vue";
 import { textMap } from "@/constants/text";
@@ -20,13 +14,15 @@ import {
     VCardSubtitle,
     VForm,
 } from "vuetify/components";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 export type ILoginDataForm = {
     email: string;
     password: string;
     remember: boolean;
 };
+
+defineOptions({ layout: SimpleLayoutForLogin });
 
 const loginFormRef = ref(null);
 
@@ -38,17 +34,27 @@ const formData = useForm<ILoginDataForm>({
     remember: false,
 });
 
+const state = reactive({
+    isLoading: false,
+});
+
 const submit = () => {
     const isValid = loginFormRef.value?.validate();
     if (!isValid) {
         return;
     }
+    state.isLoading = true;
+
     formData
         .transform((data) => ({
             ...data,
             remember: formData.remember ? "on" : "",
         }))
-        .post(window.route("login"), {});
+        .post(window.route("login"), {
+            onFinish: () => {
+                state.isLoading = false;
+            },
+        });
 };
 </script>
 
@@ -89,7 +95,12 @@ const submit = () => {
                 ></VTextField>
             </VCardText>
             <VCardActions>
-                <VBtn type="submit" variant="flat" color="primary">
+                <VBtn
+                    type="submit"
+                    variant="flat"
+                    color="primary"
+                    :loading="state.isLoading"
+                >
                     {{ textMap.verbs.login }}
                 </VBtn>
             </VCardActions>

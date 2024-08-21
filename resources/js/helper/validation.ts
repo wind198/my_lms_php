@@ -60,7 +60,9 @@ export const processBackendErrorMsg = (msg: string, itemType?: string) => {
     if (msg.includes("is required")) {
         return textMap.validations.required;
     }
-    if (msg.includes("do not match our records")) {
-        return textMap.validations.notFound({ item: itemType });
+    if (msg.includes("These credentials do not match our records")) {
+        return textMap.validations.notCorrect({
+            item: textMap.nouns.email_or_password,
+        });
     }
 };

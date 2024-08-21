@@ -14,7 +14,7 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(5)->create([
+        User::factory()->count(500)->create([
             'user_type' => 'student',
             'education_background' => 'high_school',
             'password'=> Hash::make('123123')

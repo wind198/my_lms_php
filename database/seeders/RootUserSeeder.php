@@ -20,7 +20,9 @@ class RootUserSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'tuanbk1908@gmail.com'],
             [
-                'name' => 'Root User',
+                'first_name' => 'Le',
+                'last_name' => 'Tuan',
+                'full_name' => 'Le Tuan',
                 'password' => Hash::make('Niteco@07'),
                 'email_verified_at' => now(),
                 'phone' => '0968576908',

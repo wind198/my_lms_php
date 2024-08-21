@@ -1,17 +1,11 @@
 <?php
 
+use App\Http\Controllers\Students;
+use App\Http\Controllers\Teachers;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
 Route::middleware([
     'auth:sanctum',
@@ -21,4 +15,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/', function () {
+        return redirect("/settings/students");
+    });
+
+    Route::get('/settings', function () {
+        return redirect("/settings/students");
+    });
+    Route::get('/settings/students', [Students::class, 'index'])->name('settings__students');
+    Route::get('/settings/teachers', [Teachers::class, 'index'])->name('settings__teachers');
 });

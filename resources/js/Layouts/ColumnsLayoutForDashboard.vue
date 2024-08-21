@@ -4,20 +4,50 @@ import {
     VApp,
     VAppBar,
     VContainer,
+    VList,
     VMain,
     VNavigationDrawer,
     VResponsive,
+    VListItem,
+    VListItemTitle,
 } from "vuetify/components";
+import { Link } from "@inertiajs/vue3";
+import { concatClasses } from "@/helper";
+import { AppLinkClasses, NavLinkClasses } from "@/constants";
+
+const settingLinks = [
+    { to: "/settings/students", text: "Students", value: "students" },
+    { to: "/settings/teachers", text: "Teachers", value: "teachers" },
+];
 </script>
 <template>
-    <VResponsive class="border rounded" max-height="300">
+    <VResponsive class="border rounded">
         <VApp>
             <VAppBar :title="textMap.appTitle.long"></VAppBar>
 
             <VNavigationDrawer>
-                <v-list>
-                    <v-list-item title="Navigation drawer"></v-list-item>
-                </v-list>
+                <div class="d-flex flex-column py-2">
+                    <div
+                        v-for="link in settingLinks"
+                        :key="link.value"
+                        v-ripple
+                    >
+                        <Link
+                            :class="
+                                concatClasses(
+                                    NavLinkClasses.concat(
+                                        'px-3',
+                                        'py-2',
+                                        'd-block'
+                                    )
+                                )
+                            "
+                            :href="link.to"
+                            v-ripple
+                            >{{ link.text }}
+                        </Link>
+                    </div>
+                </div>
             </VNavigationDrawer>
 
             <VMain>

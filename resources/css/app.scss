@@ -1,0 +1,14 @@
+.v-card-actions {
+    padding-left: 1rem;
+}
+.text-cap-first::first-letter {
+    text-transform: uppercase;
+}
+
+// classes start with _ is intended not to be used alone
+._app-link {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}

@@ -26,8 +26,13 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $firstName = fake()->firstName();
+        $lastName = fake()->lastName();
+        $fullName = "{$firstName} {$lastName}";
         return [
-            'name' => fake()->name(),
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'full_name' => $fullName,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -35,7 +40,6 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
-            'current_team_id' => null,
             'education_background' => $this->faker->word(), // Assuming `education_background` is an enum or short text
             'user_type' => $this->faker->randomElement(['admin', 'user', 'guest']), // Example enum values
             'phone' => $this->faker->phoneNumber(),
